@@ -38,7 +38,7 @@ docker_compose() {
     docker-compose up --build
 }
 
-# There are reduntant ``__pycache__`` files throughout all directories, which slow down the development process   
+# There are reduntant ``__pycache__`` files throughout all directories, which slow down the development process
 clean_pycache() {
     echo "Cleaning __pycache__ directories and .pyc files..."
     find . -type d -name "__pycache__" -exec rm -rf {} +
@@ -66,5 +66,5 @@ case "$1" in
     *)
         echo "Invalid command. Available commands: setup, build-docs, docker-compose, clean-pycache"
         ;;
-        
+
 esac

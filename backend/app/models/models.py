@@ -1,4 +1,5 @@
 from pydantic import BaseModel, HttpUrl
+
 """This module represents ``Pydantic`` classes which are going to be used as structures for ``API`` requests """
 
 class Attack(BaseModel):

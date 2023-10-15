@@ -1,9 +1,12 @@
-from sqlalchemy import Column, Integer, ForeignKey, Boolean, DateTime, String
-from .base import Base
 import datetime
 
+from sqlalchemy import Boolean, Column, DateTime, ForeignKey, Integer, String
+
+from .base import Base
+
+
 class AttackResult(Base):
-    """ 
+    """
     Represents the result of an attack on a specific ``URL`` or ``InputField``.
 
     :id: The primary key identifier for the attack result.
@@ -17,10 +20,10 @@ class AttackResult(Base):
 
     Example:
     --------
-    attack_result = AttackResult(website_id=1, url_id=1, input_field_id=1, 
+    attack_result = AttackResult(website_id=1, url_id=1, input_field_id=1,
                                  attack_id=1, was_successful=True, details="Script executed successfully.")
     """
-    
+
     __tablename__ = 'attack_results'
     id = Column(Integer, primary_key=True)
     website_id = Column(Integer, ForeignKey('websites.id'))

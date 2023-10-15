@@ -1,15 +1,12 @@
-from fastapi import FastAPI, HTTPException, Body, Depends
 from contextlib import asynccontextmanager
 
-from pydantic import BaseModel, HttpUrl
-from database_config import DatabaseConnection, db_session  
-
-from db.website import Website, URL
-from models.models import URLPayload, AttackPayload, Attack
-from utils.utils import extract_domain_from_url
-
-
+from database_config import DatabaseConnection, db_session
+from db.website import URL, Website
+from fastapi import Body, Depends, FastAPI, HTTPException
 from logging_config import loggers
+from models.models import Attack, AttackPayload, URLPayload
+from pydantic import BaseModel, HttpUrl
+from utils.utils import extract_domain_from_url
 
 app = FastAPI()
 logger = loggers["api"]
@@ -18,12 +15,11 @@ from fastapi import HTTPException
 from sqlalchemy.orm import Session
 
 
-
 @app.post("/url")
 async def post_url(payload: URLPayload):
     """
     Endpoint to add a new URL to the database.
-    
+
     Args:
     - payload (URLPayload): The payload containing the URL data.
 
@@ -33,19 +29,19 @@ async def post_url(payload: URLPayload):
     Raises:
     - HTTPException: If there's an error while saving the URL to the database.
     """
-    
+
     url_str = str(payload.url)
     logger.info(f"Received URL {url_str}")
-    
+
     try:
         website_domain = extract_domain_from_url(url_str)
-        
+
         async with db_session() as db:
             # Create or get existing website
             website = await Website.get_by_domain(db, website_domain)
             if not website:
                 website = await Website.create(db, domain=website_domain)
-            
+
             # create the ``URL`` object
             url = await URL.create(db=db, website_id=website.id, url=url_str)
 

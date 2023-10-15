@@ -1,19 +1,18 @@
-from sqlalchemy import Column, Integer, String, ForeignKey
-from sqlalchemy.orm import relationship
 from db.base import Base
-
-from sqlalchemy.orm import Session
+from sqlalchemy import Column, ForeignKey, Integer, String
 from sqlalchemy.future import select
+from sqlalchemy.orm import Session, relationship
+
 
 class Website(Base):
     """
     Represents a website being analyzed.
-    
+
     :id: An unique identifier for the website.
     :domain: The domain name of the website.
     :urls: List of URLs associated with the website.
     :input_fields: List of input fields found on the website.
-    
+
     Example:
     website = Website(id=1, domain='example.com')
     """
@@ -46,7 +45,7 @@ class URL(Base):
     :id: An unique identifier for the URL.
     :website_id: Reference to the website this URL belongs to.
     :url: The full URL.
-    
+
     Example:
     url = URL(id=1, website_id=1, url='https://example.com/page1')
     """
@@ -68,14 +67,14 @@ class URL(Base):
 class InputField(Base):
     """
     Represents an input field on a webpage that might be vulnerable to attacks.
-    
+
     :id: An unique identifier for the input field.
     :website_id: Reference to the website this input field is found on.
-    :page_url: The URL where this input field was found. This url can be a subdomain like [https://example.com/page1] 
+    :page_url: The URL where this input field was found. This url can be a subdomain like [https://example.com/page1]
     :input_name: 'name' attribute of the input field.
     :input_type: 'type' attribute of the input field (e.g., 'text', 'password').
     :placeholder: 'placeholder' attribute of the input field.
-    
+
     Example:
     input_field = InputField(id=1, website_id=1, page_url='https://example.com/page1', input_name='username', input_type='text', placeholder='Enter your username')
     """
