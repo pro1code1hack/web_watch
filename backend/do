@@ -1,0 +1,69 @@
+#!/bin/bash
+
+start_app() {
+    echo "Starting FastAPI application..."
+    venv/bin/python app/main.py
+}
+
+# Function to set up the Python environment
+setup() {
+    if [ "$1" == "--clean" ]; then
+        echo "Cleaning up existing virtual environment..."
+        rm -rf venv
+        clean_pycache
+    fi
+
+    if [ ! -d "venv" ]; then
+        echo "Setting up virtual environment..."
+        python3 -m venv venv
+    fi
+
+    echo "Activating virtual environment..."
+    source venv/bin/activate
+
+    echo "Installing requirements from requirements.txt..."
+    pip install -r requirements.txt
+}
+
+
+build_docs() {
+    echo "Building documentation..."
+}
+
+# Function to build and run Docker container
+docker_compose() {
+    echo "Building and starting Docker containers..."
+    docker-compose up --build
+}
+
+# There are reduntant ``__pycache__`` files throughout all directories, which slow down the development process
+clean_pycache() {
+    echo "Cleaning __pycache__ directories and .pyc files..."
+    find . -type d -name "__pycache__" -exec rm -rf {} +
+    find . -type f -name "*.pyc" -exec rm -f {} +
+    echo "Cleanup complete!"
+}
+
+# Main script execution
+case "$1" in
+    setup)
+        setup $2
+        ;;
+    clean-pycache)
+        clean_pycache
+        ;;
+    build-docs)
+        build_docs
+        ;;
+    docker-compose)
+        docker_compose
+        ;;
+    start-app)
+        start_app
+        ;;
+    *)
+        echo "Invalid command. Available commands: setup, build-docs, docker-compose, clean-pycache"
+        ;;
+
+
+esac
