@@ -16,7 +16,8 @@ class Website(Base):
     Example:
     website = Website(id=1, domain='example.com')
     """
-    __tablename__ = 'websites'
+
+    __tablename__ = "websites"
     id = Column(Integer, primary_key=True)
     domain = Column(String, unique=True)
 
@@ -38,6 +39,7 @@ class Website(Base):
         await db.refresh(website)
         return website
 
+
 class URL(Base):
     """
     Represents a specific URL on a website.
@@ -49,19 +51,19 @@ class URL(Base):
     Example:
     url = URL(id=1, website_id=1, url='https://example.com/page1')
     """
-    __tablename__ = 'urls'
+
+    __tablename__ = "urls"
     id = Column(Integer, primary_key=True)
-    website_id = Column(Integer, ForeignKey('websites.id'))
+    website_id = Column(Integer, ForeignKey("websites.id"))
     url = Column(String)
 
     @classmethod
     async def create(cls, db: Session, website_id: int, url: str):
-        URL = cls(website_id= website_id, url = url)
+        URL = cls(website_id=website_id, url=url)
         db.add(URL)
         await db.flush()
         await db.refresh(URL)
         return URL
-
 
 
 class InputField(Base):
@@ -78,9 +80,10 @@ class InputField(Base):
     Example:
     input_field = InputField(id=1, website_id=1, page_url='https://example.com/page1', input_name='username', input_type='text', placeholder='Enter your username')
     """
-    __tablename__ = 'input_fields'
+
+    __tablename__ = "input_fields"
     id = Column(Integer, primary_key=True)
-    website_id = Column(Integer, ForeignKey('websites.id'))
+    website_id = Column(Integer, ForeignKey("websites.id"))
     page_url = Column(String)
     input_name = Column(String)
     input_type = Column(String)

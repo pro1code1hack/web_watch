@@ -3,11 +3,12 @@ from contextlib import asynccontextmanager
 
 from databases import Database
 from dotenv import load_dotenv
-from sqlalchemy import MetaData, create_engine
+from sqlalchemy import MetaData
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
 from sqlalchemy.orm import sessionmaker
 
 load_dotenv()
+
 
 class DatabaseConfig:
     DB_ENGINE = os.getenv("DB_ENGINE")
@@ -26,6 +27,7 @@ class DatabaseConnection:
     """
     Representation of custom ORM solution
     """
+
     metadata = MetaData()
     DATABASE_URL = DatabaseConfig.generate_db_url()
 
@@ -35,7 +37,6 @@ class DatabaseConnection:
     )
 
     database = Database(DATABASE_URL)
-
 
 
 @asynccontextmanager

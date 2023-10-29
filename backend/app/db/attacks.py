@@ -15,7 +15,8 @@ class Attack(Base):
     Example:
         xss_attack = Attack(name="XSS", description="Cross Site Scripting attack")
     """
-    __tablename__ = 'attacks'
+
+    __tablename__ = "attacks"
     id = Column(Integer, primary_key=True)
     name = Column(String)
     description = Column(String)

@@ -27,9 +27,7 @@ setup() {
 
 
 build_docs() {
-    # Placeholder for now, you can replace this with the actual documentation tool command once you decide on one
     echo "Building documentation..."
-    # e.g., sphinx-build source_dir build_dir
 }
 
 # Function to build and run Docker container
@@ -66,5 +64,6 @@ case "$1" in
     *)
         echo "Invalid command. Available commands: setup, build-docs, docker-compose, clean-pycache"
         ;;
+
 
 esac

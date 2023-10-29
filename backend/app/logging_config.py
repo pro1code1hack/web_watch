@@ -6,7 +6,9 @@ if not os.path.exists("logs"):
     os.makedirs("logs")
 
 # Define a format for the log messages
-log_format = logging.Formatter("%(asctime)s [%(levelname)s] %(name)s: %(message)s", datefmt="%Y-%m-%d %H:%M:%S")
+log_format = logging.Formatter(
+    "%(asctime)s [%(levelname)s] %(name)s: %(message)s", datefmt="%Y-%m-%d %H:%M:%S"
+)
 
 # Set up loggers to log to different files
 loggers = {

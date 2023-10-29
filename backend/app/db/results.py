@@ -24,12 +24,12 @@ class AttackResult(Base):
                                  attack_id=1, was_successful=True, details="Script executed successfully.")
     """
 
-    __tablename__ = 'attack_results'
+    __tablename__ = "attack_results"
     id = Column(Integer, primary_key=True)
-    website_id = Column(Integer, ForeignKey('websites.id'))
-    url_id = Column(Integer, ForeignKey('urls.id'))
-    input_field_id = Column(Integer, ForeignKey('input_fields.id'))
-    attack_id = Column(Integer, ForeignKey('attacks.id'))
+    website_id = Column(Integer, ForeignKey("websites.id"))
+    url_id = Column(Integer, ForeignKey("urls.id"))
+    input_field_id = Column(Integer, ForeignKey("input_fields.id"))
+    attack_id = Column(Integer, ForeignKey("attacks.id"))
     was_successful = Column(Boolean)
     timestamp = Column(DateTime, default=datetime.datetime.utcnow)
     details = Column(String)

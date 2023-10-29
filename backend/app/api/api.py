@@ -1,18 +1,12 @@
-from contextlib import asynccontextmanager
-
-from database_config import DatabaseConnection, db_session
+from database_config import db_session
 from db.website import URL, Website
-from fastapi import Body, Depends, FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException
 from logging_config import loggers
-from models.models import Attack, AttackPayload, URLPayload
-from pydantic import BaseModel, HttpUrl
+from models.models import AttackPayload, URLPayload
 from utils.utils import extract_domain_from_url
 
 app = FastAPI()
 logger = loggers["api"]
-
-from fastapi import HTTPException
-from sqlalchemy.orm import Session
 
 
 @app.post("/url")
@@ -50,22 +44,24 @@ async def post_url(payload: URLPayload):
         raise HTTPException(status_code=500, detail="Failed to save URL to database.")
 
     return {
-            "websiteDomain": website_domain,
-            "url": url.url,
-            "websiteId": url.website_id
-            }
+        "websiteDomain": website_domain,
+        "url": url.url,
+        "websiteId": url.website_id,
+    }
 
 
 @app.get("/attacks")
 async def get_attacks():
     return [
         {"id": 1, "name": "XSS", "description": "Cross Site Scripting"},
-        {"id": 2, "name": "SQL Injection", "description": "Database Injection Attack"}
+        {"id": 2, "name": "SQL Injection", "description": "Database Injection Attack"},
     ]
+
 
 @app.post("/attacks")
 async def post_attack(payload: AttackPayload):
     return {"selected_attacks": payload.selected_attacks, "details": payload.details}
+
 
 @app.get("/data")
 async def get_data():
@@ -74,10 +70,14 @@ async def get_data():
         "urls": ["https://example.com"],
         "attacks": [
             {"id": 1, "name": "XSS", "description": "Cross Site Scripting"},
-            {"id": 2, "name": "SQL Injection", "description": "Database Injection Attack"}
+            {
+                "id": 2,
+                "name": "SQL Injection",
+                "description": "Database Injection Attack",
+            },
         ],
         "attack_details": [
             {"attack_id": 1, "details": "Details about attack 1"},
-            {"attack_id": 2, "details": "Details about attack 2"}
-        ]
+            {"attack_id": 2, "details": "Details about attack 2"},
+        ],
     }
